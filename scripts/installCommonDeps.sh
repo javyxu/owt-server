@@ -155,7 +155,8 @@ install_openssl(){
     rm -f ./build/lib/libssl.*
     rm -f ./build/lib/libcrypto.*
     rm -rf openssl-1*
-    wget -c http://www.openssl.org/source/openssl-${SSL_VERSION}.tar.gz
+    wget -c https://www.openssl.org/source/openssl-${SSL_VERSION}.tar.gz
+    
     tar xf openssl-${SSL_VERSION}.tar.gz
     cd openssl-${SSL_VERSION}
     ./config no-ssl3 --prefix=$PREFIX_DIR -fPIC
@@ -254,10 +255,6 @@ install_webrtc(){
 
   pushd ${ROOT}/third_party/webrtc
   git clone -b 59-server https://github.com/open-webrtc-toolkit/owt-deps-webrtc.git src
-  pushd src
-  local COMMIT="c2aa290cfe4f63d5bfbb6540122a5e6bf2783187"
-  git reset --hard $COMMIT
-  popd
   ./src/tools-woogeen/install.sh
   ./src/tools-woogeen/build.sh
   popd
@@ -315,6 +312,7 @@ install_libsrtp2(){
 
   if [ -d $LIB_DIR ]; then
     cd $LIB_DIR
+    rm -rf libsrtp-2.1.0
     curl -o libsrtp-2.1.0.tar.gz https://codeload.github.com/cisco/libsrtp/tar.gz/v2.1.0
     tar -zxvf libsrtp-2.1.0.tar.gz
     cd libsrtp-2.1.0
